@@ -13512,7 +13512,7 @@ struct obj *target;
 				MENU_UNSELECTED);
 		}
 	} else {
-		impossible("invalid dohepaestusupgrademenu target object");
+		You("can't upgrade that.");
 	}
 
 	end_menu(tmpwin, prompt);

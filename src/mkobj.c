@@ -2103,6 +2103,9 @@ struct obj* obj;
 	case HEAVY_BLASTER_BOLT:
 	case LASER_BEAM:
 	case CARCOSAN_BOLT:
+#ifdef ARTIFICER
+	case ANVIL:
+#endif
 		return NULL;
 		/* Any other cases for specific object types go here. */
 	case SARCOPHAGUS:

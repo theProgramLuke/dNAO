@@ -3671,17 +3671,6 @@ A("The Robe of the Archmagi",			ROBE,			(const char *)0,
 	ENERGY_BOOST, (ARTI_PLUSSEV)
 	),
 
-/* TODO 2x damage vs non-living */
-A("The Forge Hammer of the Artificer",	WAR_HAMMER,		(const char *)0,
-	0L, MT_DEFAULT, MZ_DEFAULT, WT_DEFAULT,
-	A_NONE, PM_WIZARD, NON_PM, NO_TIER, (ARTG_NOGEN|ARTG_NOWISH),
-	NO_MONS(),
-	NO_ATTK(), NOFLAG,
-	PROPS(), NOFLAG,
-	PROPS(), NOFLAG,
-	ARTIFICE, NOFLAG
-	),
-
 /* Dwarf */
 A("The Bulwark of the Dwarven Defender",DWARVISH_ROUNDSHIELD,			(const char *)0,
 	0L, MT_DEFAULT, MZ_DEFAULT, WT_DEFAULT,

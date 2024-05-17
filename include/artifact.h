@@ -418,44 +418,43 @@ extern struct artifact * artilist;
 #define ADD_POISON      (LAST_PROP+56)
 #define TOWEL_ITEMS     (LAST_PROP+57)
 #define MAJ_RUMOR       (LAST_PROP+58)
-#define ARTIFICE        (LAST_PROP+59)
-#define SUMMON_PET      (LAST_PROP+60)
-#define LIFE_DEATH      (LAST_PROP+61)
-#define PRISMATIC       (LAST_PROP+62)
-#define STEAL           (LAST_PROP+63)
-#define SUMMON_VAMP     (LAST_PROP+64)
-#define COLLECT_TAX     (LAST_PROP+65)
-#define ALTMODE         (LAST_PROP+66)
-#define AEGIS           (LAST_PROP+67)
-#define CREATE_POOL     (LAST_PROP+68)
-#define SINGING         (LAST_PROP+69)
-#define WIND_PETS	    (LAST_PROP+70)
-#define DEATH_TCH       (LAST_PROP+71)
-#define SKELETAL_MINION (LAST_PROP+72)
-#define ORACLE          (LAST_PROP+73)
-#define FILTH_ARROWS    (LAST_PROP+74)
-#define ALLSIGHT        (LAST_PROP+75)
-#define INVOKE_DARK     (LAST_PROP+76)
-#define QUEST_PORTAL    (LAST_PROP+77)
-#define STONE_DRAGON    (LAST_PROP+78)
-#define MAD_KING        (LAST_PROP+79)
-#define RINGED_SPEAR    (LAST_PROP+80)
-#define RINGED_ARMOR    (LAST_PROP+81)
-#define BLOODLETTER     (LAST_PROP+82)
-#define SEVEN_LEAGUE_STEP   (LAST_PROP+83)
-#define DETESTATION  	(LAST_PROP+84)
-#define INVULNERABILITY	(LAST_PROP+85)
-#define IBITE_ARM		(LAST_PROP+86)
-#define LOOT_SELF		(LAST_PROP+87)
-#define IMPERIAL_RING	(LAST_PROP+88)
-#define SNARE_WEAPONS	(LAST_PROP+89)
-#define CHANGE_SIZE		(LAST_PROP+90)
-#define WAVES_DARKNESS	(LAST_PROP+91)
-#define GITH_ART		(LAST_PROP+92)
-#define ZERTH_ART		(LAST_PROP+93)
-#define AMALGUM_ART		(LAST_PROP+94)
-#define MORGOTH         (LAST_PROP+95)
-#define SCORPION_UPGRADES  (LAST_PROP+96)
+#define SUMMON_PET      (LAST_PROP+59)
+#define LIFE_DEATH      (LAST_PROP+60)
+#define PRISMATIC       (LAST_PROP+61)
+#define STEAL           (LAST_PROP+62)
+#define SUMMON_VAMP     (LAST_PROP+63)
+#define COLLECT_TAX     (LAST_PROP+64)
+#define ALTMODE         (LAST_PROP+65)
+#define AEGIS           (LAST_PROP+66)
+#define CREATE_POOL     (LAST_PROP+67)
+#define SINGING         (LAST_PROP+68)
+#define WIND_PETS	    (LAST_PROP+69)
+#define DEATH_TCH       (LAST_PROP+70)
+#define SKELETAL_MINION (LAST_PROP+71)
+#define ORACLE          (LAST_PROP+72)
+#define FILTH_ARROWS    (LAST_PROP+73)
+#define ALLSIGHT        (LAST_PROP+74)
+#define INVOKE_DARK     (LAST_PROP+75)
+#define QUEST_PORTAL    (LAST_PROP+76)
+#define STONE_DRAGON    (LAST_PROP+77)
+#define MAD_KING        (LAST_PROP+78)
+#define RINGED_SPEAR    (LAST_PROP+79)
+#define RINGED_ARMOR    (LAST_PROP+80)
+#define BLOODLETTER     (LAST_PROP+81)
+#define SEVEN_LEAGUE_STEP   (LAST_PROP+82)
+#define DETESTATION  	(LAST_PROP+83)
+#define INVULNERABILITY	(LAST_PROP+84)
+#define IBITE_ARM		(LAST_PROP+85)
+#define LOOT_SELF		(LAST_PROP+86)
+#define IMPERIAL_RING	(LAST_PROP+87)
+#define SNARE_WEAPONS	(LAST_PROP+88)
+#define CHANGE_SIZE		(LAST_PROP+89)
+#define WAVES_DARKNESS	(LAST_PROP+90)
+#define GITH_ART		(LAST_PROP+91)
+#define ZERTH_ART		(LAST_PROP+92)
+#define AMALGUM_ART		(LAST_PROP+93)
+#define MORGOTH         (LAST_PROP+94)
+#define SCORPION_UPGRADES  (LAST_PROP+95)
 
 
 #define MASTERY_ARTIFACT_LEVEL 20
@@ -496,7 +495,6 @@ extern struct artifact * artilist;
             // art_already_exists(ART_SADDLE_OF_BRYNHILDR) ||\
             // art_already_exists(ART_STAFF_OF_WILD_MAGIC) ||\
             // art_already_exists(ART_ROBE_OF_THE_ARCHMAGI) ||\
-            // art_already_exists(ART_FORGE_HAMMER_OF_THE_ARTIFI) ||\
             // art_already_exists(ART_LOMYA) ||\
             // art_already_exists(ART_BULWARK_OF_THE_DWARVEN_DEF) ||\
             // art_already_exists(ART_LOMYA) ||\
@@ -610,8 +608,6 @@ extern struct artifact * artilist;
             || ((a) == &artilist[ART_STAFF_OF_WILD_MAGIC] && (Role_if(PM_WIZARD) || Pantheon_if(PM_WIZARD)) && u.ulevel >= MASTERY_ARTIFACT_LEVEL &&\
                 !has_named_mastery_artifact())\
             || ((a) == &artilist[ART_ROBE_OF_THE_ARCHMAGI] && (Role_if(PM_WIZARD) || Pantheon_if(PM_WIZARD)) && u.ulevel >= MASTERY_ARTIFACT_LEVEL &&\
-                !has_named_mastery_artifact())\
-            || ((a) == &artilist[ART_FORGE_HAMMER_OF_THE_ARTIFI] && (Role_if(PM_WIZARD) || Pantheon_if(PM_WIZARD)) && u.ulevel >= MASTERY_ARTIFACT_LEVEL &&\
                 !has_named_mastery_artifact())\
             /* Drow */\
             || ((a) == &artilist[ART_LOMYA] && Race_if(PM_DROW) && u.ulevel >= MASTERY_ARTIFACT_LEVEL &&\

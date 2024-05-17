@@ -11879,7 +11879,29 @@ arti_invoke(obj)
 			scorpion_upgrade_menu(obj);
 		break;
 		case FORGE_ANVIL:{
+			struct obj *hammer;
+			You("begin setting up the forge.");
+
+			/*Not for use during combat*/
 			nomul(-d(2,10), "setting up The Forge of Hephaestus");
+
+			if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
+				hammer = mksobj(WAR_HAMMER, NO_MKOBJ_FLAGS);
+				artifact_exists(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS), FALSE);
+				hammer = oname(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS));
+
+				hammer->spe = obj->blessed ? rn2(3) : 0;
+				hammer->blessed = obj->blessed;
+				hammer->cursed = obj->cursed;
+				fix_object(hammer);
+
+				You("unlatch %s.", the(xname(hammer)));
+				hammer = hold_another_object(hammer, "You drop %s!",
+					doname(hammer), (const char *)0); /*shouldn't merge, but may drop*/
+
+				update_inventory();
+			}
+
 			obj->age = monstermoves;
 		}break;
 		case FORGE_HAMMER:{

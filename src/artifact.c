@@ -748,6 +748,7 @@ struct obj *forge;
 	char class_list[MAXOCLASSES+2];
 	add_class(class_list, ARMOR_CLASS);
 	add_class(class_list, WEAPON_CLASS);
+	add_class(class_list, TOOL_CLASS);
 	target = getobj(class_list, "upgrade");
 	if(!target) {
 		return;

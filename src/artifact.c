@@ -11880,8 +11880,8 @@ arti_invoke(obj)
 		break;
 		case FORGE_ANVIL:{
 			struct obj *hammer;
-
 			int setup_time;
+			
 			if (obj->blessed) {
 				setup_time = 5;
 			} else if (!obj->cursed) {

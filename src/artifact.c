@@ -11880,10 +11880,19 @@ arti_invoke(obj)
 		break;
 		case FORGE_ANVIL:{
 			struct obj *hammer;
-			You("begin setting up the forge.");
+
+			int setup_time;
+			if (obj->blessed) {
+				setup_time = 5;
+			} else if (!obj->cursed) {
+				setup_time = min(5, d(2 ,10));
+			} else {
+				setup_time = min(5, d(4 ,10));
+			}
 
 			/*Not for use during combat*/
-			nomul(-d(2,10), "setting up The Forge of Hephaestus");
+			You("begin setting up the forge.");
+			nomul(-setup_time, "setting up The Forge of Hephaestus");
 
 			if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
 				hammer = mksobj(WAR_HAMMER, NO_MKOBJ_FLAGS);

@@ -2865,6 +2865,32 @@ A("The Eye of the Aethiopica",		AMULET_OF_ESP,		(const char *)0,
 	CREATE_PORTAL, NOFLAG
 	),
 
+#ifdef ARTIFICER
+A("The Forge of Hephaestus",	ANVIL,		(const char *)0,
+	0L, MT_DEFAULT, MZ_LARGE, WT_DEFAULT,
+	A_NONE, NON_PM, NON_PM, TIER_S, (ARTG_NOGEN|ARTG_NOWISH),
+	// TODO ARTIFICER
+	// A_NEUTRAL, PM_ARTIFICER, NON_PM, TIER_A, (ARTG_NOGEN|ARTG_NOWISH|ARTG_MAJOR),
+	NO_MONS(),
+	NO_ATTK(), NOFLAG,
+	PROPS(), NOFLAG,
+	PROPS(FIRE_RES), NOFLAG,
+	FORGE_ANVIL, NOFLAG
+	),
+
+A("The Forge Hammer of Hephaestus",	WAR_HAMMER,		(const char *)0,
+	0L, MT_DEFAULT, MZ_LARGE, WT_DEFAULT,
+	A_NONE, NON_PM, NON_PM, TIER_F, (ARTG_NOGEN|ARTG_NOWISH),
+	// TODO ARTIFICER
+	// A_NEUTRAL, PM_ARTIFICER, NON_PM, TIER_A, (ARTG_NOGEN|ARTG_NOWISH|ARTG_MAJOR),
+	NO_MONS(),
+	NO_ATTK(), NOFLAG,
+	PROPS(), NOFLAG,
+	PROPS(FIRE_RES), NOFLAG,
+	FORGE_HAMMER, NOFLAG
+	),
+#endif
+
 /*//////////Special High-Level Artifacts//////////*/
 
 A("The Hat of the Archmagi",		CORNUTHAUM,			(const char *)0,

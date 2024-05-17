@@ -347,6 +347,7 @@ typedef long glyph_t;
 #define FIREARMS	/* KMH -- Guns and bullets */
 #define TOURIST		/* Tourist players with cameras and Hawaiian shirts */
 #define CONVICT		/* Convict player with heavy iron ball */
+#define ARTIFICER		/* Artificer player with forging */
 #define OTHER_SERVICES  /* shopkeeper services (SLASH'EM) */
 
 #define TAME_RANGED_ATTACKS /* tame monsters use ranged attacks */

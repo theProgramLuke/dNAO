@@ -11178,27 +11178,6 @@ arti_invoke(obj)
         case MAJ_RUMOR:{
           outgmaster();
         } break;
-        case ARTIFICE:{
-          int artificeFunc = doartificemenu("Improve weapon or armor:", obj);
-          struct obj *scroll = (struct obj *)0;
-          switch(artificeFunc){
-              case 0:
-                break;
-              case COMMAND_IMPROVE_WEP:
-                scroll = mksobj(SCR_ENCHANT_WEAPON, NO_MKOBJ_FLAGS);
-                break;
-              case COMMAND_IMPROVE_ARM:
-                scroll = mksobj(SCR_ENCHANT_ARMOR, NO_MKOBJ_FLAGS);
-                break;
-          }
-		  if (scroll) {
-			scroll->blessed = obj->blessed;
-			scroll->cursed = obj->cursed;
-			scroll->quan = 20;				/* do not let useup get it */
-			seffects(scroll);
-			obfree(scroll,(struct obj *)0);	/* now, get rid of it */
-		  }
-        } break;
         case SUMMON_PET:{
           /* TODO */
         } break;
@@ -11898,6 +11877,10 @@ arti_invoke(obj)
 		}break;
 		case SCORPION_UPGRADES:
 			scorpion_upgrade_menu(obj);
+		break;
+		case FORGE_ANVIL:
+		break;
+		case FORGE_HAMMER:
 		break;
 		default: pline("Program in disorder.  Artifact invoke property not recognized");
 		break;

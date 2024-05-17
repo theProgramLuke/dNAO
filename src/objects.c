@@ -1260,6 +1260,10 @@ TOOL(("figurine"),     1,  MZ_SMALL, 0, 1, 0,  20, 50,  80, MINERAL, HI_MINERAL)
 TOOL(("crystal skull"),1,  MZ_SMALL, 0, 1, 0,   0, 118, 800, GLASS, HI_GLASS),
 /*Keep in sync with doll mvar flags*/
 TOOL(("effigy",   (char *)0),     1,   MZ_TINY, 1, 1, 0,  20,  5,  80, LEATHER, HI_LEATHER),
+#ifdef ARTIFICER
+/*Base item for Forge of Hephaestus*/
+TOOL(("anvil",   (char *)0),     1,   MZ_LARGE, 0, 0, 0,  0, 200, 50, IRON, HI_METAL, O_NOWISH(1)),
+#endif
 
 #define DOLL(names, color) \
 	TOOL(DEF_BLINDNAME(names, "doll"), 0, MZ_TINY, 1, 1, 0, 0, 1, 80, CLOTH, color)

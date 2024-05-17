@@ -225,23 +225,25 @@
 #define COMMAND_ENVENOM			41
 #define COMMAND_FILTH 			42
 
-#define COMMAND_IMPROVE_WEP     43
-#define COMMAND_IMPROVE_ARM     44
+#define COMMAND_DEATH           43
 
-#define COMMAND_DEATH           45
+#define COMMAND_GRAY            44
+#define COMMAND_SILVER          45
+#define COMMAND_MERCURIAL       46
+#define COMMAND_SHIMMERING      47
+#define COMMAND_DEEP            48
+#define COMMAND_RED             49
+#define COMMAND_WHITE           50
+#define COMMAND_ORANGE          51
+#define COMMAND_BLACK           52
+#define COMMAND_BLUE            53
+#define COMMAND_GREEN           54
+#define COMMAND_YELLOW          55
 
-#define COMMAND_GRAY            46
-#define COMMAND_SILVER          47
-#define COMMAND_MERCURIAL       48
-#define COMMAND_SHIMMERING      49
-#define COMMAND_DEEP            50
-#define COMMAND_RED             51
-#define COMMAND_WHITE           52
-#define COMMAND_ORANGE          53
-#define COMMAND_BLACK           54
-#define COMMAND_BLUE            55
-#define COMMAND_GREEN           56
-#define COMMAND_YELLOW          57
+#define COMMAND_IMPROVE_FORGE   56
+#define COMMAND_UPGRADE         57
+#define COMMAND_ENCHANT         58
+#define COMMAND_PACK            59
 
 struct artifact {
 	/* Description */

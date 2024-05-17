@@ -11878,10 +11878,12 @@ arti_invoke(obj)
 		case SCORPION_UPGRADES:
 			scorpion_upgrade_menu(obj);
 		break;
-		case FORGE_ANVIL:
-		break;
-		case FORGE_HAMMER:
-		break;
+		case FORGE_ANVIL:{
+			nomul(-d(2,10), "setting up The Forge of Hephaestus");
+			obj->age = monstermoves;
+		}break;
+		case FORGE_HAMMER:{
+		}break;
 		default: pline("Program in disorder.  Artifact invoke property not recognized");
 		break;
 	} //end of first case:  Artifact Specials!!!!

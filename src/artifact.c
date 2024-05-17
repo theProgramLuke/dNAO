@@ -11879,36 +11879,40 @@ arti_invoke(obj)
 			scorpion_upgrade_menu(obj);
 		break;
 		case FORGE_ANVIL:{
-			struct obj *hammer;
-			int setup_time;
-			
-			if (obj->blessed) {
-				setup_time = 5;
-			} else if (!obj->cursed) {
-				setup_time = min(5, d(2 ,10));
+			if (!drop(obj)) {
+				You("fail to setup the forge correctly.");
 			} else {
-				setup_time = min(5, d(4 ,10));
-			}
-
-			/*Not for use during combat*/
-			You("begin setting up the forge.");
-			nomul(-setup_time, "setting up The Forge of Hephaestus");
-
-			if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
-				hammer = mksobj(WAR_HAMMER, NO_MKOBJ_FLAGS);
-				artifact_exists(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS), FALSE);
-				hammer = oname(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS));
-
-				hammer->spe = obj->blessed ? rn2(3) : 0;
-				hammer->blessed = obj->blessed;
-				hammer->cursed = obj->cursed;
-				fix_object(hammer);
-
-				You("unlatch %s.", the(xname(hammer)));
-				hammer = hold_another_object(hammer, "You drop %s!",
-					doname(hammer), (const char *)0); /*shouldn't merge, but may drop*/
-
 				update_inventory();
+
+				/*Not for use during combat*/
+				int setup_time;
+				if (obj->blessed) {
+					setup_time = 5;
+				} else if (!obj->cursed) {
+					setup_time = min(5, d(2 ,10));
+				} else {
+					setup_time = min(5, d(4 ,10));
+				}
+
+				You("begin setting up the forge.");
+				nomul(-setup_time, "setting up The Forge of Hephaestus");
+
+				if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
+					struct obj *hammer = mksobj(WAR_HAMMER, NO_MKOBJ_FLAGS);
+					artifact_exists(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS), FALSE);
+					hammer = oname(hammer, artiname(ART_FORGE_HAMMER_OF_HEPHAESTUS));
+
+					hammer->spe = obj->blessed ? rn2(3) : 0;
+					hammer->blessed = obj->blessed;
+					hammer->cursed = obj->cursed;
+					fix_object(hammer);
+
+					You("unlatch %s.", the(xname(hammer)));
+
+					hammer = hold_another_object(hammer, "You drop %s!",
+						doname(hammer), (const char *)0); /*shouldn't merge, but may drop*/
+					update_inventory();
+				}
 			}
 
 			obj->age = monstermoves;

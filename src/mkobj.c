@@ -2664,7 +2664,7 @@ register struct obj *obj;
 	int wt = objects[obj->otyp].oc_weight;
 	int base_mat = (obj->oartifact && artilist[obj->oartifact].material != MT_DEFAULT && artilist[obj->oartifact].weight != WT_DEFAULT) ? artilist[obj->oartifact].material : objects[obj->otyp].oc_material;
 
-	if (obj->otyp == MAGIC_CHEST && obj->obolted) return 99999;	/* impossibly heavy */
+	if ((obj->otyp == MAGIC_CHEST || obj->otyp == ANVIL) && obj->obolted) return 99999;	/* impossibly heavy */
 
 	if (obj->oartifact)
 		wt = artifact_weight(obj);

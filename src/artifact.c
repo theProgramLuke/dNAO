@@ -11882,6 +11882,8 @@ arti_invoke(obj)
 			if (!drop(obj)) {
 				You("fail to setup the forge correctly.");
 			} else {
+				obj->obolted = TRUE;
+				fix_object(obj);
 				update_inventory();
 
 				/*Not for use during combat*/

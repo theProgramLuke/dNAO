@@ -1429,6 +1429,12 @@ boolean telekinesis;	/* not picking it up directly by hand */
 		pline_The("chest is bolted down!");
 		return 1;	/* tried to pick something up and failed, but
 				   don't want to terminate pickup loop yet   */
+#ifdef ARTIFICER
+	} else if (obj->otyp == ANVIL && obj->obolted) {
+		pline_The("anvil is bolted down!");
+		return 1;	/* tried to pick something up and failed, but
+				   don't want to terminate pickup loop yet   */
+#endif
 	}
 
 	if ((res = lift_object(obj, (struct obj *)0, &count, telekinesis)) <= 0)

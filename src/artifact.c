@@ -766,7 +766,7 @@ struct obj *forge;
 	/*The Forge of Hepheastus out-of-the-box upgrades*/
 	add_hephaestus_mod(forge, OPROP_FIRE);
 
-	int first_upgrade = dohephaestusupgrademenu("Select an upgrade:", forge, target);
+	int first_upgrade = dohephaestusupgrademenu("Select an upgrade.", forge, target);
 	if(first_upgrade) {
 		/* Replace all possible hepheastus granted properties*/
 		remove_oprop(target, OPROP_WOOL);
@@ -811,7 +811,7 @@ struct obj *forge;
 		int second_upgrade = OPROP_NONE;
 		if (21 <= u.ulevel)
 		{
-			second_upgrade = dohephaestusupgrademenu("Select another upgrade:", forge, target);
+			second_upgrade = dohephaestusupgrademenu("Select another upgrade.", forge, target);
 		}
 		add_oprop(target, second_upgrade);
 	}
@@ -13514,6 +13514,8 @@ struct obj *target;
 		}
 	} else {
 		You("can't upgrade that.");
+		destroy_nhwindow(tmpwin);
+		return 0;
 	}
 
 	end_menu(tmpwin, prompt);

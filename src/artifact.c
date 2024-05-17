@@ -11880,7 +11880,7 @@ arti_invoke(obj)
 		break;
 		case FORGE_ANVIL:{
 			if (!can_reach_floor()) {
-				You_cant("reach %s from up here.", the(xname(otmp)));
+				You_cant("reach the floor from up here.");
 				obj->age = 0;
 				return MOVE_CANCELLED;
 			}
@@ -11903,7 +11903,6 @@ arti_invoke(obj)
 				setup_time = min(5, d(4 ,10));
 			}
 
-			You("begin setting up the forge.");
 			nomul(-setup_time, "setting up The Forge of Hephaestus");
 
 			if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
@@ -11919,42 +11918,81 @@ arti_invoke(obj)
 				You("unlatch %s.", the(xname(hammer)));
 
 				hammer = hold_another_object(hammer, "You drop %s!",
-					doname(hammer), (const char *)0); /*shouldn't merge, but may drop*/
+					doname(hammer), (const char *)0);
 				update_inventory();
 			}
 
 			obj->age = 0;
 		}break;
 		case FORGE_HAMMER:{
-			if (!can_reach_floor()) {
-				You_cant("reach %s from up here.", the(xname(otmp)));
-				obj->age = 0;
-				return MOVE_CANCELLED;
-			}
-
 			if (!uwep || uwep != obj){
 				You_feel("that you should be wielding %s.", the(xname(obj)));
 				obj->age = 0;
 				return MOVE_CANCELLED;
 			}
 
-			/* TODO ARTIFICER must stand on bolted forge to use */
-			if(TRUE) {
+			struct obj *forge = 0;
+			for (otmp = level.objects[u.ux][u.uy]; otmp && !forge; otmp = otmp->nexthere) {
+				if (otmp->oartifact == ART_FORGE_OF_HEPHAESTUS) {
+					forge = otmp;
+				}
+			}
+
+			if (!can_reach_floor()) {
+				You_cant("reach %s from up here.", the(xname(forge)));
+				obj->age = 0;
+				return MOVE_CANCELLED;
+			}
+
+			if (!forge){
+				You_feel("you are missing something.");
+				obj->age = 0;
+				return MOVE_CANCELLED;
+			}
+
+			if(!forge->obolted) {
+				You_feel("%s is too unsteady.", the(xname(forge)));
+				obj->age = 0;
+				return MOVE_CANCELLED;
 			}
 		
 			switch(doforgemenu("Select forging option.", obj)){
+				default: {
+					obj->age = 0;
+				} break;
 				case COMMAND_IMPROVE_FORGE: {
+					obj->age = 0;
 				} break;
 				case COMMAND_UPGRADE: {
+					obj->age = 0;
 				} break;
 				case COMMAND_ENCHANT: {
+					obj->age = 0;
 				} break;
 				case COMMAND_PACK: {
-					/* TODO ARTIFICER don't attach summoned hammer from crystal skull */
+					/*Not for use during combat*/
+					int packup_time;
+					if (obj->blessed) {
+						packup_time = 5;
+					} else if (!obj->cursed) {
+						packup_time = min(5, d(2 ,10));
+					} else {
+						packup_time = min(5, d(4 ,10));
+					}
+
+					nomul(-packup_time, "packing up The Forge of Hephaestus");
+					
+					freeinv(obj);
+					obfree(obj, (struct obj *)0);
+					flag_existance(ART_FORGE_HAMMER_OF_HEPHAESTUS, FALSE);
+					update_inventory();
+
+					forge->obolted = FALSE;
+					fix_object(forge);
+					pickup_object(forge, 1, FALSE);
+					update_inventory();
 				} break;
 			}
-
-			obj->age = 0;
 		}break;
 		default: pline("Program in disorder.  Artifact invoke property not recognized");
 		break;
@@ -13069,33 +13107,29 @@ struct obj *obj;
 	start_menu(tmpwin);
 	any.a_void = 0;		/* zero out all bits */
 
-	Sprintf(buf, "Improve weapons or armors:");
-	add_menu(tmpwin, NO_GLYPH, &any, 0, 0, ATR_BOLD, buf, MENU_UNSELECTED);
-    Sprintf(buf, "Weapons");
+    Sprintf(buf, "Improve the forge");
     any.a_int = COMMAND_IMPROVE_FORGE;	/* must be non-zero */
     add_menu(tmpwin, NO_GLYPH, &any,
-        'w', 0, ATR_NONE, buf,
+        'a', 0, ATR_NONE, buf,
         MENU_UNSELECTED);
 
 	/*TODO ARTIFICER disambiguate command label*/
     Sprintf(buf, "Upgrade equipment");
     any.a_int = COMMAND_UPGRADE;	/* must be non-zero */
     add_menu(tmpwin, NO_GLYPH, &any,
-        'a', 0, ATR_NONE, buf,
+        'b', 0, ATR_NONE, buf,
         MENU_UNSELECTED);
-	end_menu(tmpwin, prompt);
 
 	Sprintf(buf, "Enchant equipment");
-    any.a_int = COMMAND_UPGRADE;	/* must be non-zero */
+    any.a_int = COMMAND_ENCHANT;	/* must be non-zero */
     add_menu(tmpwin, NO_GLYPH, &any,
-        'a', 0, ATR_NONE, buf,
+        'c', 0, ATR_NONE, buf,
         MENU_UNSELECTED);
-	end_menu(tmpwin, prompt);
 
-	Sprintf(buf, "Pack up forge");
-    any.a_int = COMMAND_UPGRADE;	/* must be non-zero */
+	Sprintf(buf, "Pack up the forge");
+    any.a_int = COMMAND_PACK;	/* must be non-zero */
     add_menu(tmpwin, NO_GLYPH, &any,
-        'a', 0, ATR_NONE, buf,
+        'd', 0, ATR_NONE, buf,
         MENU_UNSELECTED);
 	end_menu(tmpwin, prompt);
 

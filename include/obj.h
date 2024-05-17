@@ -349,6 +349,7 @@ struct obj {
 #define ovar1_artiTheftType ovar1
 #define ovar1_heard ovar1
 #define ovar1_carapace ovar1
+#define ovar1_hephaestus ovar1
 	/* Number of viperwhip heads */
 	/* Moon axe phase */
 	/* Acid venom non-1d6 damage */
@@ -384,6 +385,47 @@ struct obj {
 #define FULL_MOON	 	4
 
 #define check_carapace_mod(obj, prop) ((obj)->ovar1_carapace&(prop))
+
+#define possible_hephaestus_mod(prop) (\
+	   (prop) == OPROP_WOOL \
+	|| (prop) == OPROP_MAGC \
+	|| (prop) == OPROP_REFL \
+	|| (prop) == OPROP_FIRE \
+	|| (prop) == OPROP_COLD \
+	|| (prop) == OPROP_ELEC \
+	|| (prop) == OPROP_ACID \
+	|| (prop) == OPROP_DISN \
+	|| (prop) == OPROP_HOLY \
+	|| (prop) == OPROP_UNHY \
+	|| (prop) == OPROP_PSECW \
+	|| (prop) == OPROP_PSIOW \
+	|| (prop) == OPROP_LESSER_PSIOW \
+	|| (prop) == OPROP_WATRW \
+	|| (prop) == OPROP_LESSER_WATRW \
+	|| (prop) == OPROP_FIREW \
+	|| (prop) == OPROP_LESSER_FIREW \
+	|| (prop) == OPROP_COLDW \
+	|| (prop) == OPROP_LESSER_COLDW \
+	|| (prop) == OPROP_ELECW \
+	|| (prop) == OPROP_LESSER_ELECW \
+	|| (prop) == OPROP_ACIDW \
+	|| (prop) == OPROP_LESSER_ACIDW \
+	|| (prop) == OPROP_MAGCW \
+	|| (prop) == OPROP_LESSER_MAGCW \
+	|| (prop) == OPROP_VORPW \
+	|| (prop) == OPROP_MORGW \
+	|| (prop) == OPROP_LESSER_MORGW \
+	|| (prop) == OPROP_FLAYW \
+	|| (prop) == OPROP_LESSER_FLAYW \
+	|| (prop) == OPROP_BLADED \
+	|| (prop) == OPROP_SPIKED \
+	|| (prop) == OPROP_HOLYW \
+	|| (prop) == OPROP_LESSER_HOLYW \
+	|| (prop) == OPROP_UNHYW \
+	|| (prop) == OPROP_LESSER_UNHYW \
+	)
+#define check_hephaestus_mod(obj, prop) (TRUE || (obj)->ovar1_hephaestus&(prop))
+#define add_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus |= (possible_hephaestus_mod(prop) ? (prop) : OPROP_NONE))
 
 #define check_imp_mod(obj, prop) ((obj)->ovar1_iea_upgrades&(prop))
 #define add_imp_mod(obj, prop) ((obj)->ovar1_iea_upgrades |= (prop))
@@ -443,6 +485,7 @@ struct obj {
 	|| (otmp)->oartifact == ART_BOOK_OF_LOST_NAMES \
 	|| (otmp)->oartifact == ART_BOOK_OF_INFINITE_SPELLS \
 	|| (otmp)->oartifact == ART_SCORPION_CARAPACE \
+	|| (otmp)->oartifact == ART_FORGE_OF_HEPHAESTUS \
 	)
 #define OHEARD_FEAR		0x00000001L
 #define OHEARD_HEALING	0x00000002L

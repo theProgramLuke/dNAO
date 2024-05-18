@@ -854,6 +854,8 @@ struct obj *forge;
 		|| (obj->otyp == CORPSE && obj->corpsenm == PM_SILVER_DRAGON)
 		|| obj->otyp == AMULET_OF_REFLECTION) {
 		add_hephaestus_mod(forge, HEP_OPROP_ACIDW);
+	} else if (is_boomerang(obj)) {
+		add_hephaestus_mod(forge, HEP_OPROP_RETRW);
 	} else {
 		You("can't use that to improve the forge.");
 		return;
@@ -929,6 +931,7 @@ struct obj *forge;
 		remove_oprop(target, OPROP_LESSER_HOLYW);
 		remove_oprop(target, OPROP_UNHYW);
 		remove_oprop(target, OPROP_LESSER_UNHYW);
+		remove_oprop(target, OPROP_RETRW);
 
 		do_hephaestus_delay(hammer, "working at the Forge of Hephaestus");
 		add_oprop(target, first_upgrade);
@@ -13586,8 +13589,15 @@ struct obj *target;
 				MENU_UNSELECTED);
 		}
 		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_PSIOW)) {
-			Sprintf(buf, "Whispering");
+			Sprintf(buf, "Rustling");
 			any.a_int = OPROP_LESSER_PSIOW;	/* must be non-zero */
+			add_menu(tmpwin, NO_GLYPH, &any,
+				0, 0, ATR_NONE, buf,
+				MENU_UNSELECTED);
+		}
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_RETRW) && !check_oprop(target, OPROP_RETRW)) {
+			Sprintf(buf, "Loyal");
+			any.a_int = OPROP_RETRW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);

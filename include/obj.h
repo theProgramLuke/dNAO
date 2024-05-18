@@ -421,6 +421,7 @@ struct obj {
 #define HEP_OPROP_LESSER_HOLYW 0x080000000L
 #define HEP_OPROP_UNHYW        0x100000000L
 #define HEP_OPROP_LESSER_UNHYW 0x200000000L
+#define HEP_OPROP_RETRW        0x400000000L
 #define check_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus&(prop))
 #define add_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus |= (prop))
 

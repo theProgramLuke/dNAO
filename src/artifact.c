@@ -35,7 +35,7 @@ int FDECL(doannulmenu, (const char *,struct obj *));
 int FDECL(doselfpoisonmenu, (const char *,struct obj *));
 int FDECL(doprismaticmenu, (const char *,struct obj *));
 int FDECL(dohephaestusmenu, (const char *));
-int FDECL(dohephaestusupgrademenu, (const char *,struct obj *,struct obj *));
+int FDECL(dohephaestusupgrademenu, (const char *,struct obj *,struct obj *,boolean));
 
 static NEARDATA schar delay;		/* moves left for this spell */
 static NEARDATA struct obj *artiptr;/* last/current artifact being used */
@@ -894,7 +894,7 @@ struct obj *forge;
 	add_hephaestus_mod(forge, HEP_OPROP_FIRE);
 	add_hephaestus_mod(forge, HEP_OPROP_LESSER_FIREW);
 
-	int first_upgrade = dohephaestusupgrademenu("Select an upgrade.", forge, target);
+	int first_upgrade = dohephaestusupgrademenu("Select an upgrade.", forge, target, TRUE);
 	if(first_upgrade) {
 		/* Replace all possible hepheastus granted properties*/
 		remove_oprop(target, OPROP_WOOL);
@@ -939,7 +939,7 @@ struct obj *forge;
 		int second_upgrade = 0;
 		if (21 <= u.ulevel)
 		{
-			second_upgrade = dohephaestusupgrademenu("Select another upgrade.", forge, target);
+			second_upgrade = dohephaestusupgrademenu("Select another upgrade.", forge, target, FALSE);
 		}
 		if (second_upgrade) {
 			do_hephaestus_delay(hammer, "working at the Forge of Hephaestus");
@@ -13382,10 +13382,11 @@ const char *prompt;
 }
 
 int
-dohephaestusupgrademenu(prompt, forge, target)
+dohephaestusupgrademenu(prompt, forge, target, show_all)
 const char *prompt;
 struct obj *forge;
 struct obj *target;
+boolean show_all;
 {
 	winid tmpwin;
 	int n, how;
@@ -13405,70 +13406,70 @@ struct obj *target;
 	int greaterAvailable = 18 <= u.ulevel && 18 <= ACURR(A_DEX);
 
 	if(ARMOR_CLASS == target->oclass) {
-		if(check_hephaestus_mod(forge, HEP_OPROP_ACID) && !check_oprop(target, OPROP_ACID)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_ACID) && (show_all || !check_oprop(target, OPROP_ACID))) {
 			Sprintf(buf, "Acidproof");
 			any.a_int = OPROP_ACID;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_COLD) && !check_oprop(target, OPROP_COLD)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_COLD) && (show_all || !check_oprop(target, OPROP_COLD))) {
 			Sprintf(buf, "Coldproof");
 			any.a_int = OPROP_COLD;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_FIRE) && !check_oprop(target, OPROP_FIRE)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_FIRE) && (show_all || !check_oprop(target, OPROP_FIRE))) {
 			Sprintf(buf, "Flameproof");
 			any.a_int = OPROP_FIRE;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_DISN) && !check_oprop(target, OPROP_DISN)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_DISN) && (show_all || !check_oprop(target, OPROP_DISN))) {
 			Sprintf(buf, "Disintegration-proof");
 			any.a_int = OPROP_DISN;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_HOLY) && !check_oprop(target, OPROP_HOLY)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_HOLY) && (show_all || !check_oprop(target, OPROP_HOLY))) {
 			Sprintf(buf, "Holy");
 			any.a_int = OPROP_HOLY;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_MAGC) && !check_oprop(target, OPROP_MAGC)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_MAGC) && (show_all || !check_oprop(target, OPROP_MAGC))) {
 			Sprintf(buf, "Magic-resistant");
 			any.a_int = OPROP_MAGC;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && (is_suit(target) || is_shield(target)) && check_hephaestus_mod(forge, HEP_OPROP_REFL) && !check_oprop(target, OPROP_REFL)) {
+		if(greaterAvailable && (is_suit(target) || is_shield(target)) && check_hephaestus_mod(forge, HEP_OPROP_REFL) && (show_all || !check_oprop(target, OPROP_REFL))) {
 			Sprintf(buf, "Reflective");
 			any.a_int = OPROP_REFL;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_UNHY) && !check_oprop(target, OPROP_UNHY)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_UNHY) && (show_all || !check_oprop(target, OPROP_UNHY))) {
 			Sprintf(buf, "Unholy");
 			any.a_int = OPROP_UNHY;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_ELEC) && !check_oprop(target, OPROP_ELEC)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_ELEC) && (show_all || !check_oprop(target, OPROP_ELEC))) {
 			Sprintf(buf, "Voltproof");
 			any.a_int = OPROP_ELEC;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_WOOL) && !check_oprop(target, OPROP_WOOL)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_WOOL) && (show_all || !check_oprop(target, OPROP_WOOL))) {
 			Sprintf(buf, "Woolen");
 			any.a_int = OPROP_WOOL;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
@@ -13476,175 +13477,175 @@ struct obj *target;
 				MENU_UNSELECTED);
 		}
 	} else if(WEAPON_CLASS == target->oclass || is_weptool(target)) {
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_PHSEW) && !check_oprop(target, OPROP_PHSEW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_PHSEW) && (show_all || !check_oprop(target, OPROP_PHSEW))) {
 			Sprintf(buf, "Faded");
 			any.a_int = OPROP_PHSEW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_FIREW) && !check_oprop(target, OPROP_FIREW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_FIREW) && (show_all || (!check_oprop(target, OPROP_LESSER_FIREW) && !check_oprop(target, OPROP_FIREW)))) {
 			Sprintf(buf, "Flaming");
 			any.a_int = OPROP_FIREW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_FIREW) && !check_oprop(target, OPROP_LESSER_FIREW) && !check_oprop(target, OPROP_FIREW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_FIREW) && (show_all || (!check_oprop(target, OPROP_LESSER_FIREW) && !check_oprop(target, OPROP_FIREW)))) {
 			Sprintf(buf, "Red-hot");
 			any.a_int = OPROP_LESSER_FIREW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_FLAYW) && !check_oprop(target, OPROP_FLAYW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_FLAYW) && (show_all || (!check_oprop(target, OPROP_LESSER_FLAYW) && !check_oprop(target, OPROP_FLAYW)))) {
 			Sprintf(buf, "Flaying");
 			any.a_int = OPROP_FLAYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_FLAYW) && !check_oprop(target, OPROP_LESSER_FLAYW) && !check_oprop(target, OPROP_FLAYW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_FLAYW) && (show_all || (!check_oprop(target, OPROP_LESSER_FLAYW) && !check_oprop(target, OPROP_FLAYW)))) {
 			Sprintf(buf, "Excoriating");
 			any.a_int = OPROP_LESSER_FLAYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_COLDW) && !check_oprop(target, OPROP_COLDW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_COLDW) && (show_all || (!check_oprop(target, OPROP_LESSER_COLDW) && !check_oprop(target, OPROP_COLDW)))) {
 			Sprintf(buf, "Freezing");
 			any.a_int = OPROP_COLDW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_COLDW) && !check_oprop(target, OPROP_LESSER_COLDW) && !check_oprop(target, OPROP_COLDW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_COLDW) && (show_all || (!check_oprop(target, OPROP_LESSER_COLDW) && !check_oprop(target, OPROP_COLDW)))) {
 			Sprintf(buf, "Frosted");
 			any.a_int = OPROP_LESSER_COLDW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_MAGCW) && !check_oprop(target, OPROP_MAGCW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_MAGCW) && (show_all || (!check_oprop(target, OPROP_LESSER_MAGCW) && !check_oprop(target, OPROP_MAGCW)))) {
 			Sprintf(buf, "Sparkling");
 			any.a_int = OPROP_MAGCW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_MAGCW) && !check_oprop(target, OPROP_LESSER_MAGCW) && !check_oprop(target, OPROP_MAGCW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_MAGCW) && (show_all || (!check_oprop(target, OPROP_LESSER_MAGCW) && !check_oprop(target, OPROP_MAGCW)))) {
 			Sprintf(buf, "Glittering");
 			any.a_int = OPROP_LESSER_MAGCW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_HOLYW) && !check_oprop(target, OPROP_HOLYW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_HOLYW) && (show_all || (!check_oprop(target, OPROP_LESSER_HOLYW) && !check_oprop(target, OPROP_HOLYW)))) {
 			Sprintf(buf, "Holy");
 			any.a_int = OPROP_HOLYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_HOLYW) && !check_oprop(target, OPROP_LESSER_HOLYW) && !check_oprop(target, OPROP_HOLYW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_HOLYW) && (show_all || (!check_oprop(target, OPROP_LESSER_HOLYW) && !check_oprop(target, OPROP_HOLYW)))) {
 			Sprintf(buf, "Consecrated");
 			any.a_int = OPROP_LESSER_HOLYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_WATRW) && !check_oprop(target, OPROP_WATRW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_WATRW) && (show_all || (!check_oprop(target, OPROP_LESSER_WATRW) && !check_oprop(target, OPROP_WATRW)))) {
 			Sprintf(buf, "Misty");
 			any.a_int = OPROP_WATRW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_WATRW) && !check_oprop(target, OPROP_LESSER_WATRW) && !check_oprop(target, OPROP_WATRW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_WATRW) && (show_all || (!check_oprop(target, OPROP_LESSER_WATRW) && !check_oprop(target, OPROP_WATRW)))) {
 			Sprintf(buf, "Damp");
 			any.a_int = OPROP_LESSER_WATRW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_MORGW) && !check_oprop(target, OPROP_MORGW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_MORGW) && (show_all || (!check_oprop(target, OPROP_LESSER_MORGW) && !check_oprop(target, OPROP_MORGW)))) {
 			Sprintf(buf, "Morgul");
 			any.a_int = OPROP_MORGW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_MORGW) && !check_oprop(target, OPROP_LESSER_MORGW) && !check_oprop(target, OPROP_MORGW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_MORGW) && (show_all || (!check_oprop(target, OPROP_LESSER_MORGW) && !check_oprop(target, OPROP_MORGW)))) {
 			Sprintf(buf, "Morgul-shard");
 			any.a_int = OPROP_LESSER_MORGW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_PSIOW) && !check_oprop(target, OPROP_PSIOW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_PSIOW) && (show_all || (!check_oprop(target, OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_PSIOW)))) {
 			Sprintf(buf, "Psionic");
 			any.a_int = OPROP_PSIOW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_PSIOW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_PSIOW) && (show_all || (!check_oprop(target, OPROP_LESSER_PSIOW) && !check_oprop(target, OPROP_PSIOW)))) {
 			Sprintf(buf, "Rustling");
 			any.a_int = OPROP_LESSER_PSIOW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_RETRW) && !check_oprop(target, OPROP_RETRW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_RETRW) && (show_all || !check_oprop(target, OPROP_RETRW))) {
 			Sprintf(buf, "Loyal");
 			any.a_int = OPROP_RETRW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_ELECW) && !check_oprop(target, OPROP_ELECW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_ELECW) && (show_all || (!check_oprop(target, OPROP_LESSER_ELECW) && !check_oprop(target, OPROP_ELECW)))) {
 			Sprintf(buf, "Shocking");
 			any.a_int = OPROP_ELECW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_ELECW) && !check_oprop(target, OPROP_LESSER_ELECW) && !check_oprop(target, OPROP_ELECW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_ELECW) && (show_all || (!check_oprop(target, OPROP_LESSER_ELECW) && !check_oprop(target, OPROP_ELECW)))) {
 			Sprintf(buf, "Sparking");
 			any.a_int = OPROP_LESSER_ELECW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_ACIDW) && !check_oprop(target, OPROP_ACIDW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_ACIDW) && (show_all || (!check_oprop(target, OPROP_LESSER_ACIDW) && !check_oprop(target, OPROP_ACIDW)))) {
 			Sprintf(buf, "Sizzling");
 			any.a_int = OPROP_ACIDW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_ACIDW) && !check_oprop(target, OPROP_LESSER_ACIDW) && !check_oprop(target, OPROP_ACIDW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_ACIDW) && (show_all || (!check_oprop(target, OPROP_LESSER_ACIDW) && !check_oprop(target, OPROP_ACIDW)))) {
 			Sprintf(buf, "Acrid");
 			any.a_int = OPROP_LESSER_ACIDW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_UNHYW) && !check_oprop(target, OPROP_UNHYW)) {
+		if(greaterAvailable && check_hephaestus_mod(forge, HEP_OPROP_UNHYW) && (show_all || (!check_oprop(target, OPROP_LESSER_UNHYW) && !check_oprop(target, OPROP_UNHYW)))) {
 			Sprintf(buf, "Unholy");
 			any.a_int = OPROP_UNHYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_UNHYW) && !check_oprop(target, OPROP_LESSER_UNHYW) && !check_oprop(target, OPROP_UNHYW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_LESSER_UNHYW) && (show_all || (!check_oprop(target, OPROP_LESSER_UNHYW) && !check_oprop(target, OPROP_UNHYW)))) {
 			Sprintf(buf, "Desecrated");
 			any.a_int = OPROP_LESSER_UNHYW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
 				0, 0, ATR_NONE, buf,
 				MENU_UNSELECTED);
 		}
-		if(check_hephaestus_mod(forge, HEP_OPROP_VORPW) && !check_oprop(target, OPROP_VORPW)) {
+		if(check_hephaestus_mod(forge, HEP_OPROP_VORPW) && (show_all || !check_oprop(target, OPROP_VORPW))) {
 			Sprintf(buf, "Vorpal");
 			any.a_int = OPROP_VORPW;	/* must be non-zero */
 			add_menu(tmpwin, NO_GLYPH, &any,
@@ -13653,6 +13654,12 @@ struct obj *target;
 		}
 	} else {
 		You("can't upgrade that.");
+		destroy_nhwindow(tmpwin);
+		return 0;
+	}
+
+	if (!any.a_int) {
+		/*No menu options were available.*/
 		destroy_nhwindow(tmpwin);
 		return 0;
 	}

@@ -65,6 +65,7 @@ STATIC_PTR int NDECL(read_lost);
 void FDECL(do_hephaestus_improve, (struct obj *));
 void FDECL(do_hephaestus_upgrade, (struct obj *, struct obj *));
 void FDECL(do_hephaestus_enchant, (struct obj *, struct obj *));
+void FDECL(do_hephaestus_delay, (struct obj *, const char *));
 
 STATIC_DCL int FDECL(select_gift_artifact, (aligntyp));
 STATIC_DCL int FDECL(select_floor_artifact, (struct obj *));
@@ -858,6 +859,7 @@ struct obj *forge;
 		return;
 	}
 
+	do_hephaestus_delay(forge, "improving the Forge of Hephaestus");
 	pline("%s absorbs %s.", The(xname(forge)), the(singular(obj, xname)));
 	useup(obj);
 }
@@ -878,7 +880,9 @@ struct obj *forge;
 	if(target->oartifact == ART_FORGE_HAMMER_OF_HEPHAESTUS) {
 		You("can't upgrade that.");
 		return;
-	} else if (target->oartifact && 24 <=u.ulevel) {
+	} else if (target->oartifact && 24 > u.ulevel) {
+		You("can't upgrade that yet.");
+		return;
 	} else if (target->owornmask) {
 		You("can't upgrade that while you're wearing it!");
 		return;
@@ -926,7 +930,7 @@ struct obj *forge;
 		remove_oprop(target, OPROP_UNHYW);
 		remove_oprop(target, OPROP_LESSER_UNHYW);
 
-		nomul(-5, "working at the Forge of Hephaestus");
+		do_hephaestus_delay(hammer, "working at the Forge of Hephaestus");
 		add_oprop(target, first_upgrade);
 
 		int second_upgrade = 0;
@@ -935,7 +939,7 @@ struct obj *forge;
 			second_upgrade = dohephaestusupgrademenu("Select another upgrade.", forge, target);
 		}
 		if (second_upgrade) {
-			nomul(-5, "working at the Forge of Hephaestus");
+			do_hephaestus_delay(hammer, "working at the Forge of Hephaestus");
 			add_oprop(target, second_upgrade);
 		}
 	}
@@ -946,6 +950,23 @@ do_hephaestus_enchant(hammer, forge)
 struct obj *hammer;
 struct obj *forge;
 {
+}
+
+void
+do_hephaestus_delay(obj, nomul_txt)
+struct obj *obj;
+const char *nomul_txt;
+{
+	int delay = 0;
+	if (obj->blessed) {
+		delay = 5;
+	} else if (obj->cursed) {
+		delay = d(4, 10) + 5;
+	} else {
+		delay = d(1, 10) + 5;
+	}
+
+	nomul(-delay, nomul_txt);
 }
 
 /* select an artifact to gift */
@@ -12123,7 +12144,7 @@ arti_invoke(obj)
 				setup_time = min(5, d(4 ,10));
 			}
 
-			nomul(-setup_time, "setting up The Forge of Hephaestus");
+			do_hephaestus_delay(obj, "setting up The Forge of Hephaestus");
 
 			if (!art_already_exists(ART_FORGE_HAMMER_OF_HEPHAESTUS)){
 				struct obj *hammer = mksobj(WAR_HAMMER, NO_MKOBJ_FLAGS);
@@ -12193,16 +12214,7 @@ arti_invoke(obj)
 					obj->age = 0;
 				} break;
 				case COMMAND_PACK: {
-					int packup_time;
-					if (obj->blessed) {
-						packup_time = 5;
-					} else if (!obj->cursed) {
-						packup_time = min(5, d(2 ,10));
-					} else {
-						packup_time = min(5, d(4 ,10));
-					}
-
-					nomul(-packup_time, "packing up The Forge of Hephaestus");
+					do_hephaestus_delay(obj, "packing up The Forge of Hephaestus");
 					
 					You("reattach %s.",the(xname(obj)));
 					freeinv(obj);

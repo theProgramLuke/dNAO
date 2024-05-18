@@ -12123,7 +12123,7 @@ arti_invoke(obj)
 		case SCORPION_UPGRADES:
 			scorpion_upgrade_menu(obj);
 		break;
-		case FORGE_ANVIL:{
+		case HEPHAESTUS_ANVIL:{
 			if (!can_reach_floor()) {
 				You_cant("reach the floor from up here.");
 				obj->age = 0;
@@ -12168,7 +12168,7 @@ arti_invoke(obj)
 
 			obj->age = 0;
 		}break;
-		case FORGE_HAMMER:{
+		case HEPHAESTUS_HAMMER:{
 			if (!uwep || uwep != obj){
 				You_feel("that you should be wielding %s.", the(xname(obj)));
 				obj->age = 0;

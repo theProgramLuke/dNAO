@@ -208,6 +208,34 @@ struct Role roles[] = {
 	{  1, 4,  1, 2,  0, 3 },20,	/* Energy */
 	10, 3,-3, 2, 10, A_INT, SPE_FULL_HEALING,   -14
 },
+#ifdef ARTIFICER
+{	{"Artificer", 0}, {
+	{"Tinkerer", 0},
+	{"Repairman", "Repairwomen"},
+	{"Technician", 0},
+	{"Mechanic", 0},
+	{"Machinist", 0},
+	{"Crafter", 0},
+	{"Wright", 0},
+	{"Specialist", 0},
+	{"Artisan", 0} },
+	GOD_LUGH, GOD_ILMARINEN, GOD_TLEPSH,
+	"Art", "the Foot of Olympus", "the Shrine of Aphrodite",
+	PM_ARTIFICER, NON_PM, PM_LITTLE_DOG,
+	PM_SARA__THE_LAST_ORACLE, PM_EARTH_ELEMENTAL, PM_FIRE_ELEMENTAL,
+	NON_PM, NON_PM, NON_PM, NON_PM,
+	ART_FORGE_OF_HEPHAESTUS,
+	MA_HUMAN|MA_DWARF|MA_ELF|MA_GNOME|MA_FEY, ROLE_MALE|ROLE_FEMALE |
+	  ROLE_LAWFUL|ROLE_NEUTRAL,
+	/* Str Int Wis Dex Con Cha */
+	{  7,  10, 7,  10,  7,  7},
+	{  10, 20, 10, 30,  5,  5 },
+	/* Init   Lower  Higher */
+	{ 10, 0,  0, 8,  1, 0 },	/* Hit points */
+	{  1, 0,  2, 0,  0, 2 },14,	/* Energy */
+	10, 14, 0, 1, 5, A_INT, SPE_IDENTIFY,   -6
+},
+#endif
 {	{"Knight", 0}, {
 	{"Gallant",     0},
 	{"Esquire",     0},

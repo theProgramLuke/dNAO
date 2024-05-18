@@ -37,6 +37,12 @@ const struct innate {
 		     {  10, &(HSearching), "perceptive", "" },
 		     {	 0, 0, 0, 0 } },
 
+#ifdef ARTIFICER
+	art_abil[] = { {  7, &(HFire_resistance), "cool", "warmer" },
+			 {	15, &(HWarning), "sensitive", "insensitive" },
+		     {	 0, 0, 0, 0 } },
+#endif
+
 	ana_abil[] = { {   7, &(HFast), "quick", "slow" },
 		     {	15, &(HWarning), "precognitive", "" },
 		     {	 0, 0, 0, 0 } },
@@ -844,6 +850,9 @@ int oldlevel, newlevel;
 
 	switch (Role_switch) {
 	case PM_ARCHEOLOGIST:   abil = arc_abil;	break;
+#ifdef Artificer
+	case PM_ARTIFICER:      abil = art_abil;	break;
+#endif
 	case PM_ANACHRONONAUT:    abil = ana_abil;	break;
 	case PM_BARBARIAN:      abil = bar_abil;	break;
 #ifdef BARD

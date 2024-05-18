@@ -448,6 +448,12 @@ give_up:	/* Quit */
 							flags.initalign)) {
 			any.a_int = i+1;	/* must be non-zero */
 			thisch = lowc(roles[i].name.m[0]);
+#ifdef ARTIFICER
+			/*Conflicts with Arc and Ana*/
+			if(roles[i].malenum == PM_ARTIFICER) {
+				thisch = 'i';
+			}
+#endif
 			if (thisch == lastch) thisch = highc(thisch);
 			if (flags.initgend != ROLE_NONE && flags.initgend != ROLE_RANDOM) {
 				if (flags.initgend == 1  && roles[i].name.f)

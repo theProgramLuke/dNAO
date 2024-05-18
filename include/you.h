@@ -908,10 +908,12 @@ struct you {
 #define BASE_ATTACK_BONUS(wep)	((Role_if(PM_BARBARIAN) || Role_if(PM_CONVICT) || Role_if(PM_KNIGHT) || Role_if(PM_ANACHRONONAUT) || \
 								Role_if(PM_PIRATE) || Role_if(PM_SAMURAI) || Role_if(PM_VALKYRIE) || (u.sealsActive&SEAL_BERITH) || \
 								(!wep && (martial_bonus() || (u.sealsActive&SEAL_EURYNOME))) || \
+								(Role_if(PM_ARTIFICER) && wep && wep->spe >= 7) || \
 								(Role_if(PM_MONK) && wep && is_monk_weapon(wep)) || \
 								(wep && is_lightsaber(wep) && (Unblind_telepat || (Blind && Blind_telepat)))) ? 1.00 :\
 							 (Role_if(PM_ARCHEOLOGIST) || Role_if(PM_EXILE) || Role_if(PM_CAVEMAN) || Role_if(PM_MONK) || \
 								Role_if(PM_NOBLEMAN) || Role_if(PM_PRIEST) || Role_if(PM_ROGUE) || Role_if(PM_RANGER) || \
+								(Role_if(PM_ARTIFICER) && wep && wep->spe >= 3) || \
 								(u.sealsActive&SEAL_ENKI) || (Blind_telepat && wep && is_lightsaber(wep))) ? 0.75 :\
 							 (Role_if(PM_BARD) || Role_if(PM_HEALER) || Role_if(PM_TOURIST) || Role_if(PM_WIZARD) || Role_if(PM_MADMAN)) ? 0.50:\
 							  .5) /* Failsafe */

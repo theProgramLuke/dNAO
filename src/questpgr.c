@@ -499,6 +499,32 @@ qt_montype()
 				else return &mons[PM_BLACK_FLOWER];
 			break;
 		}
+	} else if(Role_if(PM_ARTIFICER)){
+		//Very placeholdery
+		switch(rnd(10)){
+			case 1:
+			case 2:
+			case 3:
+				return &mons[PM_NAIAD];
+			break;
+			case 4:
+			case 5:
+				return &mons[PM_OREAD];
+			break;
+			case 6:
+				return &mons[PM_DEMINYMPH];
+			break;
+			case 7:
+			case 8:
+				return &mons[PM_RAZORVINE];
+			break;
+			case 9:
+				return &mons[PM_INCUBUS];
+			break;
+			case 10:
+				return &mons[PM_SUCCUBUS];
+			break;
+		}
 	} else if(Role_if(PM_CAVEMAN)){
 		//Very placeholdery
 		switch(rnd(12)){

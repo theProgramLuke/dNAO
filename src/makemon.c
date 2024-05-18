@@ -8331,7 +8331,7 @@ int mmflags;
 							otmp = mongets(mtmp, SPE_BLANK_PAPER, mkobjflags);
 						break;
 					}
-				} else switch(rn2(16)){
+				} else switch(rn2(17)){
 					//Archeologist
 					case 0:
 						mtmp->mvar_deminymph_role = PM_ARCHEOLOGIST;
@@ -8352,8 +8352,26 @@ int mmflags;
 						otmp->spe = 0+rn2(4);
 						(void) mpickobj(mtmp, otmp);
 					break;
-					//Barbarian
+					//Artificer
 					case 1:
+						mtmp->mvar_deminymph_role = PM_ARTIFICER;
+						otmp = mksobj(WAR_HAMMER, mkobjflags|MKOBJ_ARTIF);
+						otmp->spe = 3+rn2(2);
+						MAYBE_MERC(otmp)
+						(void) mpickobj(mtmp, otmp);
+						otmp = mksobj(SCALE_MAIL, mkobjflags|MKOBJ_ARTIF);
+						otmp->spe = 2+rn2(3);
+						(void) mpickobj(mtmp, otmp);
+						otmp = mksobj(HELMET, mkobjflags|MKOBJ_ARTIF);
+						otmp->spe = 2+rn2(3);
+						(void) mpickobj(mtmp, otmp);
+						otmp = mksobj(CLOAK_OF_PROTECTION, mkobjflags|MKOBJ_ARTIF);
+						otmp->spe = 2+rn2(3);
+						(void) mpickobj(mtmp, otmp);
+						(void) mongets(mtmp, rnd_attack_wand(mtmp), mkobjflags);
+					break;
+					//Barbarian
+					case 2:
 						mtmp->mvar_deminymph_role = PM_BARBARIAN;
 						if(rn2(2)){
 							otmp = mksobj(TWO_HANDED_SWORD, mkobjflags|MKOBJ_ARTIF);
@@ -8380,7 +8398,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Bard
-					case 2:
+					case 3:
 						mtmp->mvar_deminymph_role = PM_BARD;
 						otmp = mksobj(RAPIER, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 0+rn2(4);
@@ -8398,7 +8416,7 @@ int mmflags;
 						mongets(mtmp, POT_BOOZE, mkobjflags);
 					break;
 					//Caveman
-					case 3:
+					case 4:
 						mtmp->mvar_deminymph_role = PM_CAVEMAN;
 						otmp = mksobj(CLUB, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 1+rn2(3);
@@ -8415,7 +8433,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Healer
-					case 4:
+					case 5:
 						mtmp->mvar_deminymph_role = PM_HEALER;
 						otmp = mksobj(SCALPEL, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 0+rn2(4);
@@ -8444,7 +8462,7 @@ int mmflags;
 						mongets(mtmp, WAN_SLEEP, mkobjflags);
 					break;
 					//Knight
-					case 5:
+					case 6:
 						mtmp->mvar_deminymph_role = PM_KNIGHT;
 						otmp = mksobj(LONG_SWORD, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 1+rn2(3);
@@ -8467,7 +8485,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Monk
-					case 6:
+					case 7:
 						mtmp->mvar_deminymph_role = PM_MONK;
 						otmp = mksobj(GLOVES, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 2+rn2(3);
@@ -8485,7 +8503,7 @@ int mmflags;
 						mongets(mtmp, WAN_SLEEP, mkobjflags);
 					break;
 					//"Madman"/Dreamlands noble
-					case 7:
+					case 8:
 						switch(rnd(10)){
 							case 1:
 								//Yellow Sign Noble
@@ -9039,7 +9057,7 @@ int mmflags;
 						}
 					break;
 					//Noble
-					case 8:
+					case 9:
 						mtmp->mvar_deminymph_role = PM_NOBLEMAN;
 						otmp = mksobj(RAPIER, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 2+rn2(3);
@@ -9068,7 +9086,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Pirate
-					case 9:
+					case 10:
 						mtmp->mvar_deminymph_role = PM_PIRATE;
 						otmp = mksobj(SCIMITAR, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 0+rn2(4);
@@ -9095,7 +9113,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Priest
-					case 10:
+					case 11:
 						mtmp->mvar_deminymph_role = PM_PRIEST;
 						otmp = mksobj(MACE, mkobjflags|MKOBJ_ARTIF);
 						MAYBE_MERC(otmp)
@@ -9117,7 +9135,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Ranger
-					case 11:
+					case 12:
 						mtmp->mvar_deminymph_role = PM_RANGER;
 						otmp = mksobj(SHORT_SWORD, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 1+rn2(3);
@@ -9139,7 +9157,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Rogue
-					case 12:
+					case 13:
 						mtmp->mvar_deminymph_role = PM_ROGUE;
 						otmp = mksobj(SHORT_SWORD, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 0+rn2(4);
@@ -9161,7 +9179,7 @@ int mmflags;
 						mongets(mtmp, LOCK_PICK, mkobjflags);
 					break;
 					//Samurai
-					case 13:
+					case 14:
 						mtmp->mvar_deminymph_role = PM_SAMURAI;
 						otmp = mksobj(NAGINATA, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 0+rn2(4);
@@ -9192,7 +9210,7 @@ int mmflags;
 						(void) mpickobj(mtmp, otmp);
 					break;
 					//Tourist
-					case 14:
+					case 15:
 						mtmp->mvar_deminymph_role = PM_TOURIST;
 						otmp = mksobj(DART, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 2+rn2(3);
@@ -9226,7 +9244,7 @@ int mmflags;
 						mongets(mtmp, CREDIT_CARD, mkobjflags);
 					break;
 					//Wizard
-					case 15:
+					case 16:
 						mtmp->mvar_deminymph_role = PM_WIZARD;
 						otmp = mksobj(QUARTERSTAFF, mkobjflags|MKOBJ_ARTIF);
 						otmp->spe = 1+rn2(3);

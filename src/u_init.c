@@ -181,6 +181,18 @@ static struct trobj Anachrononaut_Mal_Clk[] = {
 	{ ANDROID_VISOR, 0, ARMOR_CLASS, 1, 0 },
 	{ 0, 0, 0, 0, 0 }
 };
+#ifdef ARTIFICER
+static struct trobj Artificer[] = {
+	{ WAR_HAMMER, 0, WEAPON_CLASS, 1, 0 },
+	{ HELMET, 0, ARMOR_CLASS, 1, 0 },
+	{ GLOVES, 0, ARMOR_CLASS, 1, 0 },
+	{ APPLE, 0, FOOD_CLASS, 2, 0 },
+	{ FOOD_RATION, 0, FOOD_CLASS, 3, 0 },
+	{ SCR_ENCHANT_WEAPON, 0, SCROLL_CLASS, 1, 0 },
+	{ SCR_ENCHANT_ARMOR, 0, SCROLL_CLASS, 1, 0 },
+	{ 0, 0, 0, 0, 0 }
+};
+#endif
 static struct trobj Barbarian[] = {
 #define B_MAJOR	0	/* two-handed sword or battle-axe  */
 	{ TWO_HANDED_SWORD, 0, WEAPON_CLASS, 1, UNDEF_BLESS },
@@ -1593,6 +1605,28 @@ static const struct def_skill Skill_W[] = {
     { P_NONE, 0 }
 };
 
+#ifdef ARTIFICER
+static const struct def_skill Skill_Art[] = {
+	{ P_HAMMER, P_EXPERT},
+	{ P_MACE, P_SKILLED}, { P_CLUB, P_SKILLED},
+	{ P_MATTER_SPELL, P_SKILLED}, { P_WAND_POWER, P_SKILLED},
+	{ P_TWO_WEAPON_COMBAT, P_BASIC}, { P_DAGGER, P_BASIC},
+	{ P_KNIFE, P_BASIC}, { P_AXE, P_BASIC},
+	{ P_PICK_AXE, P_BASIC}, { P_SHORT_SWORD, P_BASIC},
+	{ P_BROAD_SWORD, P_BASIC}, { P_SCIMITAR, P_BASIC},
+	{ P_SABER, P_BASIC}, { P_LONG_SWORD, P_BASIC},
+	{ P_TWO_HANDED_SWORD, P_BASIC}, { P_QUARTERSTAFF, P_BASIC},
+	{ P_POLEARMS, P_BASIC}, { P_SPEAR, P_BASIC},
+	{ P_TRIDENT, P_BASIC}, { P_LANCE, P_BASIC},
+	{ P_BOW, P_BASIC}, { P_SLING, P_BASIC},
+	{ P_CROSSBOW, P_BASIC}, { P_DART, P_BASIC},
+	{ P_SHURIKEN, P_BASIC}, { P_BOOMERANG, P_BASIC},
+	{ P_WHIP, P_BASIC}, { P_UNICORN_HORN, P_BASIC},
+	{ P_SHIELD, P_BASIC},
+	{ P_NONE, 0},
+};
+#endif
+
 static const char *oseVowels[] = {"a","e","i","o","u","ae","oe","oo","y"};
 static const char *oseConsonants[] = {"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z","ch","ll","sh","th"};
 
@@ -2039,6 +2073,14 @@ u_init()
 		urole.lgod = GOD_ILSENSINE;
 		
 	break;
+#ifdef ARTIFICER
+	case PM_ARTIFICER:
+		ini_inv(Artificer);
+		knows_class(WEAPON_CLASS);
+		knows_class(ARMOR_CLASS);
+		skill_init(Skill_Art);
+	break;
+#endif
 	case PM_BARBARIAN:
 		u.role_variant = TWO_HANDED_SWORD;
 		if (rn2(100) >= 50) {	/* see above comment */
@@ -2944,6 +2986,9 @@ int otyp;
     switch (Role_switch) {
      case PM_ARCHEOLOGIST:	skills = Skill_A; break;
      case PM_ANACHRONONAUT:	skills = Skill_Ana; break;
+#ifdef ARTIFICER
+     case PM_ARTIFICER:		skills = Skill_Art; break;
+#endif
      case PM_BARBARIAN:		skills = Skill_B; break;
 #ifdef BARD
      case PM_BARD:		skills = Skill_Bard; break;

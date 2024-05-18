@@ -1527,7 +1527,7 @@ d_level *lev;
 	if(In_quest(lev)){
 		if(Role_if(PM_ARCHEOLOGIST) || Role_if(PM_BARBARIAN) || Role_if(PM_EXILE)
 		|| Role_if(PM_PIRATE) || Role_if(PM_PRIEST) || Role_if(PM_SAMURAI)
-		|| Role_if(PM_VALKYRIE) || Role_if(PM_WIZARD)){
+		|| Role_if(PM_ARTIFICER) || Role_if(PM_VALKYRIE) || Role_if(PM_WIZARD)){
 			return lev->dlevel <= qlocate_level.dlevel;
 		} else if(Role_if(PM_HEALER) || Role_if(PM_NOBLEMAN)){
 			return TRUE;

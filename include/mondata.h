@@ -1213,6 +1213,7 @@
 #define mon_archeologist(mon)	((mon)->mtyp == PM_ARCHEOLOGIST || (mon)->mtyp == PM_LORD_CARNARVON || (mon)->mtyp == PM_STUDENT || \
 								((mon)->mtyp == PM_HOD_SEPHIRAH && Role_if(PM_ARCHEOLOGIST)) || \
 								 ((mon)->mtyp == PM_DEMINYMPH && (mon)->mvar_deminymph_role == PM_ARCHEOLOGIST))
+#define mon_artificer(mon)	((mon)->mtyp == PM_ARTIFICER)
 #define mon_anachrononaut(mon)	((mon)->mtyp == PM_ANACHRONONAUT || (mon)->mtyp == PM_TROOPER || is_myrkalfr(mon) || \
 								((mon)->mtyp == PM_HOD_SEPHIRAH && Role_if(PM_ANACHRONONAUT)) || \
 								 ((mon)->mtyp == PM_DEMINYMPH && (mon)->mvar_deminymph_role == PM_ANACHRONONAUT))

@@ -71,6 +71,13 @@ GOD_V2("_Ishtar",               A_NEUTRAL, HOLY_HOLINESS,
 GOD_V2("Anshar",                A_CHAOTIC, NEUTRAL_HOLINESS,
 	MINIONS(Cdemons)
 	),
+/* artificer */
+GOD_V2("Ilmarinen",             A_NEUTRAL, NEUTRAL_HOLINESS,
+	MINIONS(NElemen)
+	),
+GOD_V2("Tlepsh",                A_CHAOTIC, UNHOLY_HOLINESS,
+    MINIONS(Cdemons)
+	),
 /* convict */
 GOD_V2("Ilmater",               A_LAWFUL, HOLY_HOLINESS,
 	MINIONS(Langels)

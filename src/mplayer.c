@@ -159,6 +159,19 @@ char *nam;
 		};
 		sprintf(nam, "%s %s", fmlkind ? ROLL_FROM(feminine) : ROLL_FROM(masculine), ROLL_FROM(family));
 	}break;
+	case PM_ARTIFICER:{
+		/*TODO ARTIFICER more names*/
+		const char *masculine[] = {
+			"John"
+		};
+		const char *feminine[] = {
+			"Jane"
+		};
+		const char *family[] = {
+			"Cooper", "Hooper", "McGowan" "Fletcher", "Smith", "Wright"
+		};
+		sprintf(nam, "%s %s", fmlkind ? ROLL_FROM(feminine) : ROLL_FROM(masculine), ROLL_FROM(family));
+	}break;
 	case PM_BARBARIAN:{
 		//Hat tip: Characters of the Hyborian Age, hyboria.xoth.net
 		const char *masculine[] = {
@@ -651,6 +664,13 @@ int *weapon, *secweapon, *rweapon, *rwammo, *armor, *shirt, *cloak, *helm, *boot
 		*cloak = rn2(2) ? DWARVISH_CLOAK : CLOAK;
 		*boots = HIGH_BOOTS;
 	}break;
+#ifdef ARTIFICER
+	case PM_ARTIFICER:
+		*weapon = WAR_HAMMER;
+		*helm = HELMET;
+		*armor = SCALE_MAIL;
+		*tool = UPGRADE_KIT;
+#endif
 	case PM_CAVEMAN:
 	case PM_CAVEWOMAN:
 		if (rn2(4)) *weapon = MACE;

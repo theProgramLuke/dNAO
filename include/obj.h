@@ -386,46 +386,43 @@ struct obj {
 
 #define check_carapace_mod(obj, prop) ((obj)->ovar1_carapace&(prop))
 
-#define possible_hephaestus_mod(prop) (\
-	   (prop) == OPROP_WOOL \
-	|| (prop) == OPROP_MAGC \
-	|| (prop) == OPROP_REFL \
-	|| (prop) == OPROP_FIRE \
-	|| (prop) == OPROP_COLD \
-	|| (prop) == OPROP_ELEC \
-	|| (prop) == OPROP_ACID \
-	|| (prop) == OPROP_DISN \
-	|| (prop) == OPROP_HOLY \
-	|| (prop) == OPROP_UNHY \
-	|| (prop) == OPROP_PSECW \
-	|| (prop) == OPROP_PSIOW \
-	|| (prop) == OPROP_LESSER_PSIOW \
-	|| (prop) == OPROP_WATRW \
-	|| (prop) == OPROP_LESSER_WATRW \
-	|| (prop) == OPROP_FIREW \
-	|| (prop) == OPROP_LESSER_FIREW \
-	|| (prop) == OPROP_COLDW \
-	|| (prop) == OPROP_LESSER_COLDW \
-	|| (prop) == OPROP_ELECW \
-	|| (prop) == OPROP_LESSER_ELECW \
-	|| (prop) == OPROP_ACIDW \
-	|| (prop) == OPROP_LESSER_ACIDW \
-	|| (prop) == OPROP_MAGCW \
-	|| (prop) == OPROP_LESSER_MAGCW \
-	|| (prop) == OPROP_VORPW \
-	|| (prop) == OPROP_MORGW \
-	|| (prop) == OPROP_LESSER_MORGW \
-	|| (prop) == OPROP_FLAYW \
-	|| (prop) == OPROP_LESSER_FLAYW \
-	|| (prop) == OPROP_BLADED \
-	|| (prop) == OPROP_SPIKED \
-	|| (prop) == OPROP_HOLYW \
-	|| (prop) == OPROP_LESSER_HOLYW \
-	|| (prop) == OPROP_UNHYW \
-	|| (prop) == OPROP_LESSER_UNHYW \
-	)
-#define check_hephaestus_mod(obj, prop) (TRUE || (obj)->ovar1_hephaestus&(prop))
-#define add_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus |= (possible_hephaestus_mod(prop) ? (prop) : OPROP_NONE))
+
+#define HEP_OPROP_WOOL         0x000000001L
+#define HEP_OPROP_MAGC         0x000000002L
+#define HEP_OPROP_REFL         0x000000004L
+#define HEP_OPROP_FIRE         0x000000008L
+#define HEP_OPROP_COLD         0x000000010L
+#define HEP_OPROP_ELEC         0x000000020L
+#define HEP_OPROP_ACID         0x000000040L
+#define HEP_OPROP_DISN         0x000000080L
+#define HEP_OPROP_HOLY         0x000000100L
+#define HEP_OPROP_UNHY         0x000000200L
+#define HEP_OPROP_PHSEW        0x000000400L
+#define HEP_OPROP_PSIOW        0x000000800L
+#define HEP_OPROP_LESSER_PSIOW 0x000001000L
+#define HEP_OPROP_WATRW        0x000002000L
+#define HEP_OPROP_LESSER_WATRW 0x000004000L
+#define HEP_OPROP_FIREW        0x000008000L
+#define HEP_OPROP_LESSER_FIREW 0x000010000L
+#define HEP_OPROP_COLDW        0x000020000L
+#define HEP_OPROP_LESSER_COLDW 0x000040000L
+#define HEP_OPROP_ELECW        0x000080000L
+#define HEP_OPROP_LESSER_ELECW 0x000100000L
+#define HEP_OPROP_ACIDW        0x000200000L
+#define HEP_OPROP_LESSER_ACIDW 0x000400000L
+#define HEP_OPROP_MAGCW        0x000800000L
+#define HEP_OPROP_LESSER_MAGCW 0x001000000L
+#define HEP_OPROP_VORPW        0x002000000L
+#define HEP_OPROP_MORGW        0x004000000L
+#define HEP_OPROP_LESSER_MORGW 0x008000000L
+#define HEP_OPROP_FLAYW        0x010000000L
+#define HEP_OPROP_LESSER_FLAYW 0x020000000L
+#define HEP_OPROP_HOLYW        0x040000000L
+#define HEP_OPROP_LESSER_HOLYW 0x080000000L
+#define HEP_OPROP_UNHYW        0x100000000L
+#define HEP_OPROP_LESSER_UNHYW 0x200000000L
+#define check_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus&(prop))
+#define add_hephaestus_mod(obj, prop) ((obj)->ovar1_hephaestus |= (prop))
 
 #define check_imp_mod(obj, prop) ((obj)->ovar1_iea_upgrades&(prop))
 #define add_imp_mod(obj, prop) ((obj)->ovar1_iea_upgrades |= (prop))
